@@ -1,11 +1,11 @@
-# maa-website
+# MAA Website
 
 - 官网首页: [maa-website（本仓库）](https://github.com/MaaAssistantArknights/maa-website) -> <https://maa.plus>
 - 文档站: [MAA主仓库/docs](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev/docs) -> <https://docs.maa.plus>
 
 > 注意：文档站的评论区使用此仓库的 Discussions
 
-## Projects
+## MAA Monorepo Projects
 
 - `apps/web` MAA official website, build with `React`, host path `/`
 
@@ -16,7 +16,7 @@
 - Node.js `^24.4.1`
 - pnpm `^10.2`
 
-Please [Install Node.js](https://nodejs.org/en/download) first, and resolve dependencies with `pnpm` in *ROOT* directory.
+Please [Install Node.js](https://nodejs.org/en/download) first, then resolve dependencies with `pnpm` in *ROOT* directory.
 
 ```shell
 npm install -g pnpm@^10.2
@@ -25,14 +25,17 @@ pnpm install --frozen-lockfile --recursive
 
 ### Development Server
 
-- `apps/web` will be hosted on `http://localhost:3000`
+Execute in *ROOT* directory:
 
 ```shell
 pnpm dev
 ```
 
+- `apps/web` will be hosted on `http://localhost:3000`
+
 ### Code Linting
 #### Overall
+
 1. Prettier (global)
 
 Prettier is configured at the root of the repository.
@@ -73,4 +76,10 @@ Execute in *ROOT* directory:
 pnpm build
 ```
 
-Build artifacts are in `./dist`.
+Build artifacts are in `./dist`. You can try to host it locally with:
+
+```shell
+python -m http.server -d ./dist --bind 127.0.0.1
+```
+
+or any other ways that you prefer.
