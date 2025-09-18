@@ -5,11 +5,9 @@
 
 > 注意：文档站的评论区使用此仓库的 Discussions
 
-## MAA Monorepo Projects
+## Local Development
 
 - `apps/web` MAA official website, build with `React`, host path `/`
-
-## Local Development
 
 ### Prerequisite
 
