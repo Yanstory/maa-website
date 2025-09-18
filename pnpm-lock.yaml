@@ -84,6 +84,12 @@ importers:
         specifier: ^7.1.6
         version: 7.1.6(@types/node@24.5.2)(jiti@1.21.7)(yaml@2.8.1)
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.3.1
+        version: 3.3.1
+      '@eslint/js':
+        specifier: ^9.35.0
+        version: 9.35.0
       '@types/node':
         specifier: ^24.5.2
         version: 24.5.2

@@ -8,10 +8,12 @@
     "scripts": {
         "build": "turbo run build && node bundler.mjs",
         "dev": "turbo run dev",
-        "lint": "turbo run lint",
+        "lint": "pnpm run lint:prettier && pnpm run lint:js",
         "lint:js": "turbo run lint:js",
-        "lint:prettier": "turbo run lint:prettier",
-        "lintfix": "turbo run lintfix"
+        "lint:prettier": "prettier --check .",
+        "lintfix": "pnpm run lintfix:prettier && pnpm run lintfix:js",
+        "lintfix:js": "turbo run lintfix",
+        "lintfix:prettier": "prettier --write --list-different ."
     },
     "private": true,
     "devDependencies": {
