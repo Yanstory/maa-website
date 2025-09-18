@@ -10,7 +10,9 @@ export type ReleaseAsset =
 export type Release = Omit<
   Endpoints['GET /repos/{owner}/{repo}/releases/latest']['response']['data'],
   'assets'
-> & { assets: ReleaseAsset[] }
+> & {
+  assets: ReleaseAsset[]
+}
 
 export const useRelease = () => {
   const { data, ...rest } = useSWR<{
