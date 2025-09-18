@@ -1,0 +1,38 @@
+module.exports = {
+  printWidth: 120,
+  tabWidth: 2,
+  useTabs: false,
+  trailingComma: 'all',
+  semi: false,
+  arrowParens: 'always',
+  bracketSameLine: true,
+  bracketSpacing: true,
+  endOfLine: 'auto',
+  trailingComma: 'all',
+  singleQuote: true,
+  importOrder: [
+    '^@.*/(.*)$',
+    '<THIRD_PARTY_MODULES>',
+    '^(App|components|pages|store|utils|stories|models|store|constants|assets|_i18n)',
+    '^[./].*(?<![.]css)$',
+    '^[./].*(?<=[.]css)$',
+  ],
+  importOrderParserPlugins: ['typescript', 'jsx', 'classProperties', 'decorators-legacy'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
+  plugins: [require('@trivago/prettier-plugin-sort-imports')],
+  overrides: [
+    {
+      files: ['**/*.json'],
+      options: {
+        tabWidth: 4,
+      },
+    },
+    {
+      files: ['**/*.yml', '**/*.yaml'],
+      options: {
+        singleQuote: false,
+      },
+    },
+  ],
+}
