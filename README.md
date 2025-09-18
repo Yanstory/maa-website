@@ -16,12 +16,11 @@
 - Node.js `^24.4.1`
 - pnpm `^10.2`
 
-[Install Node.js](https://nodejs.org/en/download) first, and resolve dependencies with `pnpm` in *ROOT* directory.
+Please [Install Node.js](https://nodejs.org/en/download) first, and resolve dependencies with `pnpm` in *ROOT* directory.
 
 ```shell
 npm install -g pnpm@^10.2
-pnpm update --recursive
-pnpm install --recursive
+pnpm install --frozen-lockfile --recursive
 ```
 
 ### Development Server
@@ -54,16 +53,16 @@ Execute in *ROOT* directory:
 
 ```shell
 pnpm lint              # Both (prettier -> eslint)
-pnpm lint:prettier     # Use Prettier for code formatting
-pnpm lint:js           # Use ESLint for JS/TS code
+pnpm lint:format       # Use Prettier for code formatting
+pnpm lint:code         # Use ESLint for JS/TS code
 ```
 
 - Lint fix
 
 ```shell
 pnpm lintfix           # Both (prettier -> eslint)
-pnpm lintfix:prettier  # Use Prettier for code formatting
-pnpm lintfix:js        # Use ESLint for JS/TS code
+pnpm lintfix:format    # Use Prettier for code formatting
+pnpm lintfix:code      # Use ESLint for JS/TS code
 ```
 
 ### Build

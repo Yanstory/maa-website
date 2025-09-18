@@ -3,7 +3,7 @@
     "tasks": {
         "build": {
             "dependsOn": ["^build"],
-            "outputs": ["dist/**", ".vuepress/dist/**"]
+            "outputs": ["dist/**"]
         },
         "dev": {
             "cache": false,
@@ -12,19 +12,22 @@
         "dev:home": {
             "cache": false
         },
-        "dev:docs": {
-            "cache": false
-        },
         "lint": {
             "cache": false
         },
-        "lint:js": {
+        "lint:code": {
             "cache": false
         },
-        "lint:prettier": {
+        "lint:format": {
             "cache": false
         },
         "lintfix": {
+            "cache": false
+        },
+        "lintfix:code": {
+            "cache": false
+        },
+        "lintfix:format": {
             "cache": false
         }
     }

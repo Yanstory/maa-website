@@ -6,14 +6,14 @@
     "repository": "https://github.com/MaaAssistantArknights/maa-website",
     "license": "AGPL-3.0-or-later",
     "scripts": {
-        "build": "turbo run build && node bundler.mjs",
         "dev": "turbo run dev",
-        "lint": "pnpm run lint:prettier && pnpm run lint:js",
-        "lint:js": "turbo run lint:js",
-        "lint:prettier": "prettier --check .",
-        "lintfix": "pnpm run lintfix:prettier && pnpm run lintfix:js",
-        "lintfix:js": "turbo run lintfix",
-        "lintfix:prettier": "prettier --write --list-different ."
+        "build": "turbo run build && node bundler.mjs",
+        "lint": "pnpm run lint:format && pnpm run lint:code",
+        "lint:code": "turbo run lint:code",
+        "lint:format": "prettier --check .",
+        "lintfix": "pnpm run lintfix:format && pnpm run lintfix:code",
+        "lintfix:code": "turbo run lintfix",
+        "lintfix:format": "prettier --write --list-different ."
     },
     "private": true,
     "devDependencies": {

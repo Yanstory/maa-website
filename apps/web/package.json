@@ -6,13 +6,12 @@
     "repository": "https://github.com/MaaAssistantArknights/maa-website",
     "license": "AGPL-3.0-or-later",
     "scripts": {
-        "dev": "pnpm run dev:home",
-        "dev:home": "vite",
+        "dev": "vite",
         "build": "tsc && vite build",
-        "lint": "pnpm run lint:js",
-        "lint:js": "eslint",
-        "lintfix": "pnpm run lintfix:js",
-        "lintfix:js": "eslint --fix ."
+        "lint": "pnpm run lint:code",
+        "lint:code": "eslint",
+        "lintfix": "pnpm run lintfix:code",
+        "lintfix:code": "eslint --fix ."
     },
     "dependencies": {
         "@iconify/icons-mdi": "^1.2.48",
