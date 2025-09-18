@@ -7,12 +7,11 @@
     "license": "AGPL-3.0-or-later",
     "scripts": {
         "dev": "vite",
-        "dev:home": "vite",
         "build": "tsc && vite build",
-        "lint:js": "eslint --ext \".js,.jsx,.ts,.tsx\"",
-        "lint:prettier": "prettier --check .",
-        "lint": "yarn lint:js && yarn lint:prettier",
-        "lintfix": "prettier --write --list-different . && yarn lint:js --fix"
+        "lint": "pnpm run lint:code",
+        "lint:code": "eslint",
+        "lintfix": "pnpm run lintfix:code",
+        "lintfix:code": "eslint --fix ."
     },
     "dependencies": {
         "@iconify/icons-mdi": "^1.2.48",
@@ -38,10 +37,14 @@
         "vite": "^7.1.6"
     },
     "devDependencies": {
+        "@eslint/eslintrc": "^3.3.1",
+        "@eslint/js": "^9.35.0",
         "@types/node": "^24.5.2",
         "@types/react": "^19.1.13",
         "@types/react-dom": "^19.1.9",
         "@types/three": "^0.180.0",
+        "@typescript-eslint/eslint-plugin": "^8.44.0",
+        "@typescript-eslint/parser": "^8.44.0",
         "@vitejs/plugin-react": "^5.0.3",
         "autoprefixer": "^10.4.21",
         "eslint": "^9.35.0",

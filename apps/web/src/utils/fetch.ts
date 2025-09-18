@@ -113,8 +113,8 @@ export async function checkUrlConnectivity(
       `${measureName}-start`,
       `${measureName}-end`,
     )
-    var measures = performance.getEntriesByName(measureName)
-    var measure = measures[0]
+    const measures = performance.getEntriesByName(measureName)
+    const measure = measures[0]
     performance.clearMarks(`${measureName}-start`)
     performance.clearMarks(`${measureName}-end`)
     performance.clearMeasures(measureName)
@@ -164,8 +164,8 @@ export async function checkUrlSpeed(
       `${measureName}-start`,
       `${measureName}-end`,
     )
-    var measures = performance.getEntriesByName(measureName)
-    var measure = measures[0]
+    const measures = performance.getEntriesByName(measureName)
+    const measure = measures[0]
     performance.clearMarks(`${measureName}-start`)
     performance.clearMarks(`${measureName}-end`)
     performance.clearMeasures(measureName)
