@@ -11,7 +11,7 @@
 
 ## Local Development
 
-Requirements:
+### Prerequisite
 
 - Node.js `^24.4.1`
 - pnpm `^10.2`
@@ -24,7 +24,7 @@ pnpm update --recursive
 pnpm install --recursive
 ```
 
-Start a development server
+### Development Server
 
 - `apps/web` will be hosted on `http://localhost:3000`
 
@@ -32,24 +32,46 @@ Start a development server
 pnpm dev
 ```
 
-Lint code
+### Code Linting
+#### Overall
+1. Prettier (global)
+
+Prettier is configured at the root of the repository.
+
+Its role is to enforce consistent code style and formatting across all apps/packages.
+
+2. ESLint (per-app)
+
+ESLint is configured separately within each app/package.
+
+Its role is to enforce syntax rules, type checks, and framework-specific best practices (e.g., React rules).
+
+#### Commands
+
+Execute in *ROOT* directory:
+
+- Lint check
 
 ```shell
-pnpm lint              # Both
+pnpm lint              # Both (prettier -> eslint)
 pnpm lint:prettier     # Use Prettier for code formatting
 pnpm lint:js           # Use ESLint for JS/TS code
 ```
 
-Lint fix
+- Lint fix
 
 ```shell
-pnpm lintfix           # Both
+pnpm lintfix           # Both (prettier -> eslint)
 pnpm lintfix:prettier  # Use Prettier for code formatting
 pnpm lintfix:js        # Use ESLint for JS/TS code
 ```
 
-Build release
+### Build
+
+Execute in *ROOT* directory:
 
 ```shell
-pnpm build             # See files in ./dist
+pnpm build
 ```
+
+Build artifacts are in `./dist`.
