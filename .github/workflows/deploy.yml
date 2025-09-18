@@ -1,10 +1,14 @@
 name: Website Workflow
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - "prod"
+  workflow_dispatch:
+    inputs:
+      deploy-to-prod:
+        description: "Deploy to prod"
+        default: false
+        required: true
+        type: boolean
 
 jobs:
   build:
@@ -44,6 +48,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
+        if: ${{ inputs.deploy-to-prod == true || github.ref == 'refs/heads/prod' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: "./dist"
