@@ -38,15 +38,15 @@ pnpm dev
 
 1. Prettier (global)
 
-Prettier is configured at the root of the repository.
+   Prettier is configured at the root of the repository.
 
-Its role is to enforce consistent code style and formatting across all apps/packages.
+   Its role is to enforce consistent code style and formatting across all apps/packages.
 
 2. ESLint (per-app)
 
-ESLint is configured separately within each app/package.
+   ESLint is configured separately within each app/package.
 
-Its role is to enforce syntax rules, type checks, and framework-specific best practices (e.g., React rules).
+   Its role is to enforce syntax rules, type checks, and framework-specific best practices (e.g., React rules).
 
 #### Commands
 
