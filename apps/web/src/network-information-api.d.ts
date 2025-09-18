@@ -1,5 +1,15 @@
-declare interface Navigator extends NavigatorNetworkInformation {}
-declare interface WorkerNavigator extends NavigatorNetworkInformation {}
+declare interface Navigator extends NavigatorNetworkInformation {
+  userAgentData?: {
+    getHighEntropyValues: (
+      hints: string[],
+    ) => Promise<{ platform: string; architecture: string }>
+  }
+}
+
+// 仅继承父接口却没有成员的接口，没必要重复声明
+// 暂时注释，等到报错再研究
+// declare interface WorkerNavigator extends NavigatorNetworkInformation { }
+
 declare interface NavigatorNetworkInformation {
   readonly connection?: NetworkInformation
 }

@@ -147,6 +147,7 @@ export const DownloadState: FC<DownloadStateProps> = forwardRef<
     </motion.div>
   )
 })
+DownloadState.displayName = 'DownloadState'
 
 type DownloadDetectionStates =
   | {
@@ -191,7 +192,7 @@ const DownloadButton = forwardRef<
     platform: ResolvedPlatform
     releaseName: string | null
   }
->(({ platform, releaseName }, ref) => {
+>(({ platform, releaseName }) => {
   const { t } = useTranslation()
   const href = platform.asset.browser_download_url
 
@@ -261,7 +262,7 @@ const DownloadButton = forwardRef<
         throw new Error()
       }
     } catch {
-      for (let [i, [index, mirror]] of mirrors.entries()) {
+      for (const [i, [index, mirror]] of mirrors.entries()) {
         setLoadState({
           state: 'speedTesting',
           mirrorIndex: index + 1,
@@ -474,6 +475,7 @@ const DownloadButton = forwardRef<
     )
   }
 })
+DownloadButton.displayName = 'DownloadButton'
 
 export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
   const { t } = useTranslation()

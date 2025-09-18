@@ -101,3 +101,4 @@ export const GlowButton: FCC<GlowButtonProps> = forwardRef<
   }
   return inner
 })
+GlowButton.displayName = 'GlowButton'

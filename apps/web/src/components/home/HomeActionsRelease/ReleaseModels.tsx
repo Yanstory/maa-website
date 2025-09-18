@@ -98,9 +98,10 @@ export const detectPlatform = async (): Promise<
     return DetectionFailedSymbol
   }
 
-  const userAgentData = await (
-    navigator as any
-  ).userAgentData?.getHighEntropyValues(['platform', 'architecture'])
+  const userAgentData = await navigator.userAgentData?.getHighEntropyValues([
+    'platform',
+    'architecture',
+  ])
 
   if (userAgentData) {
     const { platform, architecture } = userAgentData

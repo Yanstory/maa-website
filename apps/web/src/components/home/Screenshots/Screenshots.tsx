@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useTheme } from '@/contexts/ThemeContext'
 import { getLanguageOption } from '@/i18n'
 import { useFrame, useLoader } from '@react-three/fiber'

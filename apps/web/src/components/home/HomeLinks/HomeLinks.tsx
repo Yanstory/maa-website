@@ -329,3 +329,4 @@ export const HomeLinks = forwardRef<HTMLDivElement, HomeLinksProps>(
     )
   },
 )
+HomeLinks.displayName = 'HomeLinks'

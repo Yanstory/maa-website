@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { useTheme } from '@/contexts/ThemeContext'
 import { Canvas } from '@react-three/fiber'
 import { ErrorBoundary } from '@sentry/react'
@@ -17,7 +18,6 @@ export const HomeHero: FC = () => {
   const { t, i18n } = useTranslation()
 
   const linkRef = useRef<HTMLDivElement | null>(null)
-  const indicatorRef = useRef<HTMLDivElement | null>(null)
   const windowDimensions = useWindowSize()
   const { theme } = useTheme()
   const [showLinks, setShowLinks] = useState(false)
