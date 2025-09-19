@@ -1,0 +1,11 @@
+{
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "mkxml.vscode-filesize",
+                "esbenp.prettier-vscode",
+                "dbaeumer.vscode-eslint"
+            ]
+        }
+    }
+}
