@@ -62,6 +62,12 @@ const LINKS = [
     icon: linksIconPrtsPlus,
   },
   {
+    key: 'maafw',
+    href: 'https://maafw.xyz/',
+    title: 'friendLinks.maafw',
+    icon: linksIconPrtsPlus,
+  },
+  {
     key: 'mirrorc',
     href: 'https://mirrorchyan.com/zh/projects?source=maaplus-links',
     title: 'friendLinks.mirrorc',
