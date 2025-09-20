@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import { ErrorBoundary } from '@sentry/react'
 
 import { motion } from 'framer-motion'
-import { FC, useRef, useState } from 'react'
+import { FC, Suspense, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWindowSize } from 'react-use'
 
@@ -78,7 +78,9 @@ function ScreenshotsCanvas() {
       dpr={window.devicePixelRatio || 1.5}
     >
       <ambientLight intensity={1} />
-      <Screenshots />
+      <Suspense fallback={null}>
+        <Screenshots />
+      </Suspense>
     </Canvas>
   )
 }
