@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 import { useTheme } from '@/contexts/ThemeContext'
 import { getLanguageOption } from '@/i18n'
-import { useFrame, useLoader } from '@react-three/fiber'
+import { useTexture } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 
 import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Mesh, TextureLoader, Vector2 } from 'three'
+import { Mesh, Vector2 } from 'three'
 
 const screenshots = import.meta.glob('@/assets/screenshots/*/*/*.png', {
   eager: true,
@@ -42,9 +43,11 @@ export function Screenshots() {
   const screenshotLeft = getScreenshot(theme, languageFileName, 'left')
   const screenshotRight = getScreenshot(theme, languageFileName, 'right')
 
-  const textureCenter = useLoader(TextureLoader, screenshotCenter)
-  const textureLeft = useLoader(TextureLoader, screenshotLeft)
-  const textureRight = useLoader(TextureLoader, screenshotRight)
+  const [textureCenter, textureLeft, textureRight] = useTexture([
+    screenshotCenter,
+    screenshotLeft,
+    screenshotRight,
+  ])
 
   const imageAspects = {
     left: 1010 / 768,
