@@ -17,7 +17,7 @@
 Please [Install Node.js](https://nodejs.org/en/download) first, then resolve dependencies with `pnpm` in *ROOT* directory.
 
 ```shell
-npm install -g pnpm@^10.2
+npm install -g pnpm
 pnpm install --frozen-lockfile --recursive
 ```
 
