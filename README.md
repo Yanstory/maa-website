@@ -5,25 +5,38 @@
 
 > 注意：文档站的评论区使用此仓库的 Discussions
 
-## Local Development
+## Project Overview
+### Project Components
 
 - `apps/web` MAA official website, build with `React`, host path `/`
 
-### Prerequisite
+### Prerequisites
 
 - Node.js `^24.4.1`
-- pnpm `^10.2`
+- pnpm `^10.17.0`
 
-Please [Install Node.js](https://nodejs.org/en/download) first, then resolve dependencies with `pnpm` in *ROOT* directory.
+## Development
+### 1. Set Up the Environment
+
+Choose *ONE* of the following methods to set up your environment:
+
+#### Local Clone
+Please [Install Node.js](https://nodejs.org/en/download) first, then install dependencies using `pnpm` in the *ROOT* directory:
 
 ```shell
-npm install -g pnpm@^10.2
+npm install -g pnpm
 pnpm install --frozen-lockfile --recursive
 ```
 
-### Development Server
+#### Remote Setup (Github Codespaces)
 
-Execute in *ROOT* directory:
+Open this repository in GitHub Codespaces. Once it's ready, the environment will be set up automatically.
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg?color=green)](https://codespaces.new/MaaAssistantArknights/maa-website)
+
+### 2. Run the Development Server
+
+Execute in the *ROOT* directory:
 
 ```shell
 pnpm dev
@@ -31,8 +44,8 @@ pnpm dev
 
 - `apps/web` will be hosted on `http://localhost:3000`
 
-### Code Linting
-#### Overall
+### 3. Lint Code
+#### General Overview
 
 1. Prettier (global)
 
@@ -66,7 +79,7 @@ pnpm lintfix:format    # Use Prettier for code formatting
 pnpm lintfix:code      # Use ESLint for JS/TS code
 ```
 
-### Build
+### 4. Build the Project
 
 Execute in *ROOT* directory:
 
@@ -74,7 +87,7 @@ Execute in *ROOT* directory:
 pnpm build
 ```
 
-Build artifacts are in `./dist`. You can try to host it locally with:
+The build artifacts will be generated in `./dist`. You can serve them locally with:
 
 ```shell
 python -m http.server -d ./dist --bind 127.0.0.1
