@@ -48,7 +48,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
-        if: ${{ inputs.deploy-to-prod == true || github.ref == 'refs/heads/prod' }}
+        if: ${{ inputs.deploy-to-prod == true }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: "./dist"
