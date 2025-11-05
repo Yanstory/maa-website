@@ -24,7 +24,7 @@ function App() {
         t('meta.description', { interpolation: { escapeValue: false } }),
       )
     }
-  }, [t])
+  }, [t, i18n.language])
   return (
     <ThemeProvider>
       <LayoutStateProvider>
@@ -38,7 +38,7 @@ function App() {
             <LanguageToggle />
             <ThemeToggle />
           </motion.div>
-          <section className="h-screen min-h-[20rem] w-full relative">
+          <section className="h-screen min-h-80 w-full relative">
             <HomeHero />
           </section>
         </main>

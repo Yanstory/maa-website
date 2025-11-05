@@ -2,6 +2,9 @@ name: Website Workflow
 
 on:
   push:
+    branches:
+      - dev
+  pull_request:
   workflow_dispatch:
     inputs:
       deploy-to-prod:
@@ -16,9 +19,10 @@ jobs:
     timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@v5
         with:
+          fetch-depth: 0
           show-progress: false
 
       - name: Install pnpm
@@ -27,15 +31,22 @@ jobs:
           # version: 10  # Already specified in package.json
           run_install: false
 
-      - name: Setup Node.js environment
+      - name: Setup node.js environment
         uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: pnpm
           cache-dependency-path: "./pnpm-lock.yaml"
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install node modules
+        run: pnpm install --recursive --frozen-lockfile
+
+      - name: Lint check
+        if: ${{ inputs.deploy-to-prod != true }}
+        run: |
+          pnpm lint:code || {
+            echo "::warning title=Lint Check::ESLint reported issues. Please fix them before deploying to production."
+          }
 
       - name: Build
         run: pnpm run build
