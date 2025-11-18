@@ -44,9 +44,6 @@ export const HomeHero: FC = () => {
                   </div>
                 </div>
               }
-              onError={() => {
-                if (linkRef.current) linkRef.current.style.opacity = '1'
-              }}
             >
               <ScreenshotsCanvas />
             </ErrorBoundary>
