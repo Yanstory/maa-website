@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Mesh, Vector2 } from 'three'
 
-const screenshots = import.meta.glob('@/assets/screenshots/*/*/*.png', {
+const screenshots = import.meta.glob('@/assets/screenshots/*/*/*.webp', {
   eager: true,
   import: 'default',
 }) as Record<string, string>
@@ -18,7 +18,7 @@ function getScreenshot(
   languageFileName: string,
   position: 'left' | 'center' | 'right',
 ) {
-  const path = `/src/assets/screenshots/${theme}/${languageFileName}/${position}.png`
+  const path = `/src/assets/screenshots/${theme}/${languageFileName}/${position}.webp`
   return screenshots[path]
 }
 
