@@ -24,17 +24,21 @@ export default defineConfig({
         manualChunks: {
           react: ['react', 'react-dom'],
           framer: ['framer-motion'],
-          i18n: ['i18next', 'react-i18next', 'i18next-browser-languagedetector'],
+          i18n: [
+            'i18next',
+            'react-i18next',
+            'i18next-browser-languagedetector',
+          ],
           sentry: ['@sentry/react'],
           three: [
             'three',
             '@react-three/fiber',
             '@react-three/drei',
             '@react-three/postprocessing',
-            'postprocessing'
+            'postprocessing',
           ],
-        }
-      }
-    }
+        },
+      },
+    },
   },
 })
