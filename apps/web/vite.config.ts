@@ -19,5 +19,26 @@ export default defineConfig({
   },
   build: {
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          framer: ['framer-motion'],
+          i18n: [
+            'i18next',
+            'react-i18next',
+            'i18next-browser-languagedetector',
+          ],
+          monitor: ['@sentry/react', 'react-ga-neo'],
+          three: ['three'],
+          three_tool: [
+            '@react-three/fiber',
+            '@react-three/drei',
+            '@react-three/postprocessing',
+            'postprocessing',
+          ],
+        },
+      },
+    },
   },
 })

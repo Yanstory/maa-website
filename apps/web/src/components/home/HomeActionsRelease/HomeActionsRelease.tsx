@@ -186,13 +186,10 @@ type DownloadDetectionStates =
       state: 'fallback'
     }
 
-const DownloadButton = forwardRef<
-  HTMLDivElement,
-  {
-    platform: ResolvedPlatform
-    releaseName: string | null
-  }
->(({ platform, releaseName }) => {
+const DownloadButton: FC<{
+  platform: ResolvedPlatform
+  releaseName: string | null
+}> = ({ platform, releaseName }) => {
   const { t } = useTranslation()
   const href = platform.asset.browser_download_url
 
@@ -477,8 +474,7 @@ const DownloadButton = forwardRef<
       />
     )
   }
-})
-DownloadButton.displayName = 'DownloadButton'
+}
 
 export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
   const { t } = useTranslation()
