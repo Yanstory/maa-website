@@ -299,7 +299,7 @@ export const HomeLinks = forwardRef<HTMLDivElement, HomeLinksProps>(
         style={{ opacity: 0 }} // 初始状态为隐藏
       >
         <div className="pt-4 pb-4 px-4">
-          <h1 className="text-2xl font-bold mb-3 px-2">
+          <h1 className="text-2xl font-bold mb-3 px-2 whitespace-nowrap">
             {t('references.friendLinks')}
             <span
               className={`text-sm ml-4 font-bold opacity-80 tracking-wider ${theme === 'dark' ? '' : 'text-gray-700'}`}
