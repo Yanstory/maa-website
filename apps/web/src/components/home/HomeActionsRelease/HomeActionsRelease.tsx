@@ -196,16 +196,29 @@ const DownloadButton: FC<{
   const [loadState, setLoadState] = useState<DownloadDetectionStates>({
     state: 'idle',
   })
-  const mirrorsTemplate = useMemo(
-    () => [
+  const mirrorsTemplate = useMemo(() => {
+    const baseMirrors = [
       ...platform.asset.mirrors.map((url) => ({
         transform: () => url,
         name: new URL(url).hostname,
       })),
       ...GITHUB_MIRRORS,
-    ],
-    [platform.asset.mirrors],
-  )
+    ]
+
+    // Windows x64 优先使用国内镜像
+    if (platform.platform.id === 'windows-x64' && releaseName) {
+      return [
+        {
+          name: 'download.maa.plus',
+          transform: () =>
+            `https://download.maa.plus/MAA/MAA-${releaseName}-win-x64.zip`,
+        },
+        ...baseMirrors,
+      ]
+    }
+
+    return baseMirrors
+  }, [platform.asset.mirrors, platform.platform.id, releaseName])
 
   const detectDownload = useCallback(async () => {
     setLoadState({ state: 'detecting', detected: 0 })
