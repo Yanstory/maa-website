@@ -314,7 +314,7 @@ export const HomeLinks = forwardRef<HTMLDivElement, HomeLinksProps>(
               LINKS
             </span>
           </h1>
-          <div className="max-h-[50vh] overflow-y-auto flex flex-col gap-2 pb-2">
+          <div className="flex flex-col gap-2 pb-2">
             {LINKS.map((link) => {
               return (
                 <HomeLink
