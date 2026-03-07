@@ -1,6 +1,7 @@
 import linksIconArkNights from '@/assets/links/ark-nights.com.webp?url'
 import linksIconArkntools from '@/assets/links/arkntools.app.webp?url'
 import linksIconMirrorChyan from '@/assets/links/mirrorc.webp?url'
+import linksIconMaaEnd from '@/assets/links/maaend.png?url'
 import linksIconPenguinStats from '@/assets/links/penguin-stats.webp?url'
 import linksIconPrtsPlus from '@/assets/links/prts.plus.webp?url'
 import linksIconYituliu from '@/assets/links/yituliu.site.webp?url'
@@ -66,6 +67,12 @@ const LINKS = [
     href: 'https://maafw.xyz/',
     title: 'friendLinks.maafw',
     icon: linksIconPrtsPlus,
+  },
+  {
+    key: 'maaend',
+    href: 'https://maaend.com/',
+    title: 'friendLinks.maaend',
+    icon: linksIconMaaEnd,
   },
   {
     key: 'mirrorc',
