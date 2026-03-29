@@ -529,8 +529,14 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
                 <motion.span
                   className="inline-flex items-center whitespace-nowrap text-red-500 dark:text-red-400"
                   initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease: 'easeOut', delay: 0.6 }}
+                  animate={
+                    viewAll ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }
+                  }
+                  transition={{
+                    duration: 0.4,
+                    ease: 'easeOut',
+                    delay: viewAll ? 0.3 : 0,
+                  }}
                   style={{ display: 'inline-flex' }}
                 >
                   <Icon
@@ -552,20 +558,10 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
         </motion.div>
       )
     },
-    [envPlatformId, release.name, t],
-  )
-
-  const allPlatformDownloadBtns = useMemo(
-    () => validPlatforms.map(renderPlatformButton),
-    [validPlatforms, renderPlatformButton],
+    [envPlatformId, release.name, viewAll, t],
   )
 
   const innerContent = useMemo<React.ReactNode>(() => {
-    if (viewAll) {
-      // 用户主动展开 -> 显示所有
-      return allPlatformDownloadBtns
-    }
-
     if (!envPlatformId || envPlatformId === DetectionFailedSymbol) {
       // 检测失败
       return (
@@ -594,14 +590,7 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
 
     // 检测成功且支持
     return renderPlatformButton(platform)
-  }, [
-    validPlatforms,
-    viewAll,
-    envPlatformId,
-    renderPlatformButton,
-    allPlatformDownloadBtns,
-    t,
-  ])
+  }, [validPlatforms, envPlatformId, renderPlatformButton, t])
 
   const [os, arch] = useMemo(() => {
     if (!envPlatformId) return ['unknown', 'unknown']
@@ -627,55 +616,84 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
 
   const mirrorchyanLang = getLanguageOption(i18n.language).mirrorchyanLang
 
+  // 原来的逻辑是 当`ViewAll=true`时使用`allPlatformDownloadBtns`进行替换，把整个第一行（下载，查看全部，mirror酱）替换为全部平台的下载渠道按钮。
+  // 下面的按钮因为`!viewAll`便不再渲染。我将渲染逻辑进行了修改，`ViewAll=true`时不再进行替换，而是根据其值展示和收起相关按钮。
+  // 对原来的进行排版，原来只用一个`motion.div`将所有按钮放在了一起，现在将组件使用`AnimatePresence`进行分组并设置对应的动画。
+  // 去掉了条件渲染，改为隐藏和显示相关按钮。
   return (
+    // 外层容器：改为纵向排列 (flex-col)，负责控制上下两排的整体高度和间距
     <motion.div
-      layout
-      className={`w-full flex flex-wrap justify-center items-center gap-4 max-h-[50vh]`}
+      layout="position" // ✅ 防止高度参与 layout 计算
+      className="w-full flex flex-col justify-center items-center gap-x-4 max-h-[50vh]"
     >
-      <AnimatePresence mode="popLayout">
-        {innerContent}
+      {/* 第一排 */}
+      <motion.div
+        layout
+        className="w-full flex flex-wrap justify-center items-center gap-4"
+      >
+        <AnimatePresence mode="popLayout">
+          {innerContent}
 
-        {!viewAll && (
+          {/* view all 按钮 */}
           <motion.div
             layout
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
             key="view-all-switch"
-            className={`gap-4 items-center flex ${isWidthOverflow ? 'flex-col' : 'flex-row'}`}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className={`flex items-center gap-4 ${isWidthOverflow ? 'flex-col w-full' : ''}`}
           >
-            <GlowButton bordered onClick={() => setViewAll(true)}>
+            <GlowButton bordered onClick={() => setViewAll((prev) => !prev)}>
               <div className="text-base">
-                {t('release.buttonLabels.viewAll')}
+                {viewAll
+                  ? t('release.buttonLabels.collapse')
+                  : t('release.buttonLabels.viewAll')}
               </div>
             </GlowButton>
           </motion.div>
-        )}
 
-        {!viewAll && mirrorchyanAvailable && (
-          <motion.div
-            layout
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            key="mirrorchyan"
-          >
-            <GlowButton
-              bordered
-              href={`https://mirrorchyan.com/${mirrorchyanLang}/projects?rid=MAA&os=${os}&arch=${arch}&channel=stable&source=maaplus-download`}
+          {mirrorchyanAvailable && (
+            <motion.div
+              layout
+              key="mirrorchyan"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
             >
-              <div className="text-sm">
-                <p>
-                  <i>{t('release.buttonLabels.mirrorchyanCDKPrompt')}</i>
-                </p>
-                <p>
-                  <i>{t('release.buttonLabels.mirrorchyanDownload')}</i>
-                </p>
-              </div>
-            </GlowButton>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <GlowButton
+                bordered
+                href={`https://mirrorchyan.com/${mirrorchyanLang}/projects?rid=MAA&os=${os}&arch=${arch}&channel=stable&source=maaplus-download`}
+              >
+                <div className="text-sm">
+                  <p>
+                    <i>{t('release.buttonLabels.mirrorchyanCDKPrompt')}</i>
+                  </p>
+                  <p>
+                    <i>{t('release.buttonLabels.mirrorchyanDownload')}</i>
+                  </p>
+                </div>
+              </GlowButton>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+      {/* 原先的条件渲染会导致dom出现和消失，因此父容器在做layout动画的同时，子元素在做height动画。动画结束后，dom消失，layout再次计算位置进行跳跃。*/}
+      {/*这里便把条件渲染给去掉了，改成根据`viewAll`的值使用不同的动画。*/}
+      <motion.div
+        key="view-all-content"
+        initial={false} // ✅ 防止首次动画
+        animate={
+          viewAll
+            ? { opacity: 1, height: 'auto', overflow: 'visible' }
+            : { opacity: 0, height: 0, overflow: 'hidden' }
+        }
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className="w-full flex flex-wrap justify-center gap-4"
+      >
+        {validPlatforms
+          .filter((p) => p.platform.id !== envPlatformId)
+          .map(renderPlatformButton)}
+      </motion.div>
     </motion.div>
   )
 }
