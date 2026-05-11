@@ -48,7 +48,21 @@
         "platformDetect": {
             "detecting": "正在匹配系统架构...",
             "failure": "未找到当前架构的可用下载链接",
-            "archIncompatible": "不支持您当前的系统架构"
+            "archIncompatible": "不支持您当前的系统架构",
+            "archIncompatibleConfirm": {
+                "title": "继续下载前确认（架构不匹配）",
+                "warning": "检测到当前系统推荐下载 {{recommended}}，您现在选择的是 {{selected}}。下载错误架构将无法运行，是否继续？",
+                "final": {
+                    "detectWrong": "仅在您确信系统检测错误、且确实应下载 {{selected}} 时，点击“继续下载”；否则请点击“取消”。",
+                    "otherDevice": "如果您是为其他设备下载 {{selected}}，请点击“继续下载”；否则请点击“取消”。"
+                },
+                "actions": {
+                    "detectWrong": "我确信检测错误，继续下载",
+                    "otherDevice": "我是为其他设备下载，继续下载",
+                    "confirm": "继续下载",
+                    "cancel": "取消"
+                }
+            }
         },
         "mirrorDetect": {
             "detecting": "正在检测下载镜像可用性（{{current}}/{{total}}）..."

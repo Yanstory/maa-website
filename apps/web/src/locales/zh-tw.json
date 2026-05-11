@@ -48,7 +48,21 @@
         "platformDetect": {
             "detecting": "正在偵測系統架構...",
             "failure": "未找到您目前系統架構的可用下載連結",
-            "archIncompatible": "不支援您目前的系統架構"
+            "archIncompatible": "不支援您目前的系統架構",
+            "archIncompatibleConfirm": {
+                "title": "繼續下載前確認（架構不相容）",
+                "warning": "目前偵測到的系統建議下載 {{recommended}}，但您選擇的是 {{selected}}。下載錯誤架構將無法執行，是否仍要繼續？",
+                "final": {
+                    "detectWrong": "只有在您確信平台偵測錯誤，且 {{selected}} 才是正確版本時，才按下「繼續下載」；否則請按「取消」。",
+                    "otherDevice": "若您是為其他裝置下載 {{selected}}，請按下「繼續下載」；否則請按「取消」。"
+                },
+                "actions": {
+                    "detectWrong": "我確信偵測錯誤，繼續下載",
+                    "otherDevice": "我是為其他裝置下載，繼續下載",
+                    "confirm": "繼續下載",
+                    "cancel": "取消"
+                }
+            }
         },
         "mirrorDetect": {
             "detecting": "正在檢測下載鏡像可用性（{{current}}/{{total}}）..."

@@ -48,7 +48,21 @@
         "platformDetect": {
             "detecting": "システムアーキテクチャを検出中...",
             "failure": "現在のアーキテクチャに対応するダウンロードリンクが見つかりませんでした",
-            "archIncompatible": "現在のシステムアーキテクチャはサポートされていません"
+            "archIncompatible": "現在のシステムアーキテクチャはサポートされていません",
+            "archIncompatibleConfirm": {
+                "title": "ダウンロードを続行する前の確認（アーキテクチャ不一致）",
+                "warning": "現在のシステムで推奨されるダウンロードは {{recommended}} ですが、選択中は {{selected}} です。誤ったアーキテクチャは実行できません。続行しますか？",
+                "final": {
+                    "detectWrong": "プラットフォーム検出が誤りで、{{selected}} が正しいと確信している場合のみ「ダウンロードを続行」を押してください。そうでなければキャンセルしてください。",
+                    "otherDevice": "{{selected}} を別デバイス向けにダウンロードする場合は「ダウンロードを続行」、そうでなければキャンセルしてください。"
+                },
+                "actions": {
+                    "detectWrong": "検出が誤りなのでダウンロードを続行",
+                    "otherDevice": "別デバイス向けにダウンロードを続行",
+                    "confirm": "ダウンロードを続行",
+                    "cancel": "キャンセル"
+                }
+            }
         },
         "mirrorDetect": {
             "detecting": "ダウンロードミラーの有効性を検出中（{{current}}/{{total}}）..."

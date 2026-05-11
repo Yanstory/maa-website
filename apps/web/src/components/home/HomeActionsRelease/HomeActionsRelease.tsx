@@ -186,16 +186,222 @@ type DownloadDetectionStates =
       state: 'fallback'
     }
 
+type CompatibilityConfirmReason = 'detectWrong' | 'otherDevice'
+
+const CompatibilityConfirmModal: FC<{
+  open: boolean
+  title: string
+  warning: string
+  detectWrongActionText: string
+  detectWrongDescription: string
+  otherDeviceActionText: string
+  otherDeviceDescription: string
+  cancelText: string
+  onClose: () => void
+  onSelectReason: (reason: CompatibilityConfirmReason) => void
+}> = ({
+  open,
+  title,
+  warning,
+  detectWrongActionText,
+  detectWrongDescription,
+  otherDeviceActionText,
+  otherDeviceDescription,
+  cancelText,
+  onClose,
+  onSelectReason,
+}) => {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.button
+            type="button"
+            aria-label={cancelText}
+            className="absolute inset-0 bg-black/45"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className={clsx(
+              'relative w-full max-w-xl rounded-2xl border p-5 shadow-2xl',
+              'dark:bg-zinc-900/95 dark:border-zinc-700 dark:text-zinc-100',
+              'bg-white/95 border-stone-200 text-stone-900',
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <Icon
+                icon={mdiAlertCircle}
+                className="mt-0.5 shrink-0 text-orange-500"
+                width="22"
+                height="22"
+              />
+              <div className="space-y-3">
+                <h3 className="text-base font-semibold dark:text-zinc-50 text-stone-900">
+                  {title}
+                </h3>
+                <p className="text-sm leading-6 dark:text-zinc-200 text-stone-700">
+                  {warning}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              <button
+                type="button"
+                className={clsx(
+                  'w-full text-left rounded-xl border p-3 transition-colors',
+                  'dark:border-zinc-700 dark:hover:bg-zinc-800/70',
+                  'border-stone-200 hover:bg-stone-100/80',
+                )}
+                onClick={() => onSelectReason('detectWrong')}
+              >
+                <div className="text-sm font-medium">{detectWrongActionText}</div>
+                <div className="mt-1 text-xs dark:text-zinc-300 text-stone-600">
+                  {detectWrongDescription}
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className={clsx(
+                  'w-full text-left rounded-xl border p-3 transition-colors',
+                  'dark:border-zinc-700 dark:hover:bg-zinc-800/70',
+                  'border-stone-200 hover:bg-stone-100/80',
+                )}
+                onClick={() => onSelectReason('otherDevice')}
+              >
+                <div className="text-sm font-medium">{otherDeviceActionText}</div>
+                <div className="mt-1 text-xs dark:text-zinc-300 text-stone-600">
+                  {otherDeviceDescription}
+                </div>
+              </button>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <GlowButton translucent bordered onClick={onClose}>
+                <span className="px-2 py-0.5 text-sm">{cancelText}</span>
+              </GlowButton>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+const CompatibilityFinalConfirmModal: FC<{
+  open: boolean
+  title: string
+  message: string
+  confirmText: string
+  cancelText: string
+  onClose: () => void
+  onConfirm: () => void
+}> = ({
+  open,
+  title,
+  message,
+  confirmText,
+  cancelText,
+  onClose,
+  onConfirm,
+}) => {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-[60] flex items-center justify-center px-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.button
+            type="button"
+            aria-label={cancelText}
+            className="absolute inset-0 bg-black/55"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className={clsx(
+              'relative w-full max-w-lg rounded-2xl border p-5 shadow-2xl',
+              'dark:bg-zinc-900 dark:border-zinc-700 dark:text-zinc-100',
+              'bg-white border-stone-200 text-stone-900',
+            )}
+          >
+            <div className="flex items-start gap-3">
+              <Icon
+                icon={mdiAlertCircle}
+                className="mt-0.5 shrink-0 text-orange-500"
+                width="22"
+                height="22"
+              />
+              <div className="space-y-3">
+                <h3 className="text-base font-semibold dark:text-zinc-50 text-stone-900">
+                  {title}
+                </h3>
+                <p className="text-sm leading-6 dark:text-zinc-200 text-stone-700">
+                  {message}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 flex justify-end gap-2">
+              <GlowButton translucent bordered onClick={onClose}>
+                <span className="px-2 py-0.5 text-sm">{cancelText}</span>
+              </GlowButton>
+              <GlowButton bordered onClick={onConfirm}>
+                <span className="px-2 py-0.5 text-sm">{confirmText}</span>
+              </GlowButton>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 const DownloadButton: FC<{
   platform: ResolvedPlatform
   releaseName: string | null
-}> = ({ platform, releaseName }) => {
+  requiresCompatibilityConfirm?: boolean
+  detectedPlatformLabel?: string | null
+}> = ({
+  platform,
+  releaseName,
+  requiresCompatibilityConfirm = false,
+  detectedPlatformLabel,
+}) => {
   const { t } = useTranslation()
   const href = platform.asset.browser_download_url
 
   const [loadState, setLoadState] = useState<DownloadDetectionStates>({
     state: 'idle',
   })
+  const [compatibilityModalOpen, setCompatibilityModalOpen] = useState(false)
+  const [finalConfirmReason, setFinalConfirmReason] =
+    useState<CompatibilityConfirmReason | null>(null)
+
+  const selectedPlatformLabel = useMemo(
+    () => [t(platform.platform.title), t(platform.platform.subtitle)].join(' '),
+    [platform.platform.subtitle, platform.platform.title, t],
+  )
+  const recommendedPlatformLabel = useMemo(
+    () => detectedPlatformLabel || t('release.platformDetect.failure'),
+    [detectedPlatformLabel, t],
+  )
   const mirrorsTemplate = useMemo(() => {
     const baseMirrors = [
       ...platform.asset.mirrors.map((url) => ({
@@ -335,6 +541,71 @@ const DownloadButton: FC<{
     })
   }, [href, mirrorsTemplate])
 
+  const handleDownloadClick = useCallback(() => {
+    if (requiresCompatibilityConfirm) {
+      setFinalConfirmReason(null)
+      setCompatibilityModalOpen(true)
+      return
+    }
+
+    void detectDownload()
+  }, [
+    detectDownload,
+    requiresCompatibilityConfirm,
+  ])
+
+  const handleCompatibilityConfirm = useCallback(
+    () => {
+      if (!finalConfirmReason) {
+        return
+      }
+      console.warn('download started with incompatible architecture', {
+        reason: finalConfirmReason,
+        selectedPlatformLabel,
+        recommendedPlatformLabel,
+      })
+      setFinalConfirmReason(null)
+      setCompatibilityModalOpen(false)
+      void detectDownload()
+    },
+    [
+      detectDownload,
+      finalConfirmReason,
+      recommendedPlatformLabel,
+      selectedPlatformLabel,
+    ],
+  )
+
+  const handleSelectCompatibilityReason = useCallback(
+    (reason: CompatibilityConfirmReason) => {
+      setFinalConfirmReason(reason)
+    },
+    [],
+  )
+
+  const handleCloseCompatibilityFlow = useCallback(() => {
+    setFinalConfirmReason(null)
+    setCompatibilityModalOpen(false)
+  }, [])
+
+  useEffect(() => {
+    if (!compatibilityModalOpen && !finalConfirmReason) {
+      return
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setFinalConfirmReason(null)
+        setCompatibilityModalOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [compatibilityModalOpen, finalConfirmReason])
+
   useEffect(() => {
     if (loadState.state === 'fallback') {
       console.warn('no mirrors responded correctly; fallback to original URL')
@@ -359,33 +630,87 @@ const DownloadButton: FC<{
 
   if (loadState.state === 'idle') {
     return (
-      <GlowButton bordered onClick={detectDownload}>
-        <div className="flex flex-col items-start whitespace-nowrap">
-          <div className="flex items-center -ml-1">
-            <Icon icon={platform.platform.icon} fontSize="28px" />
-            <span className="ml-2">
-              {t(platform.platform.title)}
-              <span className="mx-1 text-sm">
-                {t(platform.platform.subtitle)}
-              </span>
-              {t('release.buttonLabels.download')}
-            </span>
-          </div>
-          <div className="flex items-center mt-1 mb-0.5 ml-8 text-sm">
-            <span>{releaseName}</span>
-            {platform.asset.download_count && (
-              <>
-                <Icon icon={mdiDownload} className="ml-2 mr-0.5" />
-                <span>
-                  {platform.asset.download_count
-                    ? platform.asset.download_count.toLocaleString()
-                    : '—'}
+      <>
+        <GlowButton bordered onClick={handleDownloadClick}>
+          <div className="flex flex-col items-start whitespace-nowrap">
+            <div className="flex items-center -ml-1">
+              <Icon icon={platform.platform.icon} fontSize="28px" />
+              <span className="ml-2">
+                {t(platform.platform.title)}
+                <span className="mx-1 text-sm">
+                  {t(platform.platform.subtitle)}
                 </span>
-              </>
-            )}
+                {t('release.buttonLabels.download')}
+              </span>
+            </div>
+            <div className="flex items-center mt-1 mb-0.5 ml-8 text-sm">
+              <span>{releaseName}</span>
+              {platform.asset.download_count && (
+                <>
+                  <Icon icon={mdiDownload} className="ml-2 mr-0.5" />
+                  <span>
+                    {platform.asset.download_count
+                      ? platform.asset.download_count.toLocaleString()
+                      : '—'}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      </GlowButton>
+        </GlowButton>
+        <CompatibilityConfirmModal
+          open={compatibilityModalOpen && !finalConfirmReason}
+          title={t('release.platformDetect.archIncompatibleConfirm.title')}
+          warning={t('release.platformDetect.archIncompatibleConfirm.warning', {
+            selected: selectedPlatformLabel,
+            recommended: recommendedPlatformLabel,
+          })}
+          detectWrongActionText={t(
+            'release.platformDetect.archIncompatibleConfirm.actions.detectWrong',
+          )}
+          detectWrongDescription={t(
+            'release.platformDetect.archIncompatibleConfirm.final.detectWrong',
+            {
+              selected: selectedPlatformLabel,
+            },
+          )}
+          otherDeviceActionText={t(
+            'release.platformDetect.archIncompatibleConfirm.actions.otherDevice',
+          )}
+          otherDeviceDescription={t(
+            'release.platformDetect.archIncompatibleConfirm.final.otherDevice',
+            {
+              selected: selectedPlatformLabel,
+            },
+          )}
+          cancelText={t('release.platformDetect.archIncompatibleConfirm.actions.cancel')}
+          onClose={handleCloseCompatibilityFlow}
+          onSelectReason={handleSelectCompatibilityReason}
+        />
+        <CompatibilityFinalConfirmModal
+          open={compatibilityModalOpen && !!finalConfirmReason}
+          title={t('release.platformDetect.archIncompatibleConfirm.title')}
+          message={
+            finalConfirmReason === 'otherDevice'
+              ? t(
+                  'release.platformDetect.archIncompatibleConfirm.final.otherDevice',
+                  {
+                    selected: selectedPlatformLabel,
+                  },
+                )
+              : t(
+                  'release.platformDetect.archIncompatibleConfirm.final.detectWrong',
+                  {
+                    selected: selectedPlatformLabel,
+                  },
+                )
+          }
+          confirmText={t('release.platformDetect.archIncompatibleConfirm.actions.confirm')}
+          cancelText={t('release.platformDetect.archIncompatibleConfirm.actions.cancel')}
+          onClose={handleCloseCompatibilityFlow}
+          onConfirm={handleCompatibilityConfirm}
+        />
+      </>
     )
   } else if (loadState.state === 'detecting') {
     return (
@@ -517,13 +842,41 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
     [release],
   )
 
+  const detectedPlatform = useMemo(
+    () => validPlatforms.find((platform) => platform.platform.id === envPlatformId),
+    [envPlatformId, validPlatforms],
+  )
+
+  const detectedPlatformLabel = useMemo(() => {
+    if (!detectedPlatform) {
+      return null
+    }
+
+    return [
+      t(detectedPlatform.platform.title),
+      t(detectedPlatform.platform.subtitle),
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }, [detectedPlatform, t])
+
   const renderPlatformButton = useCallback(
     (platform: ResolvedPlatform) => {
       const isCurrentPlatform = platform.platform.id === envPlatformId
+      const shouldConfirmIncompatibleDownload =
+        !!envPlatformId &&
+        envPlatformId !== DetectionFailedSymbol &&
+        !isCurrentPlatform
+
       return (
         <motion.div layout key={platform.platform.id}>
           <div className="flex flex-col items-center gap-1">
-            <DownloadButton platform={platform} releaseName={release.name} />
+            <DownloadButton
+              platform={platform}
+              releaseName={release.name}
+              requiresCompatibilityConfirm={shouldConfirmIncompatibleDownload}
+              detectedPlatformLabel={detectedPlatformLabel}
+            />
             <div className="min-h-5 mt-1 text-xs">
               {!isCurrentPlatform ? (
                 <motion.span
@@ -558,7 +911,7 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
         </motion.div>
       )
     },
-    [envPlatformId, release.name, viewAll, t],
+    [detectedPlatformLabel, envPlatformId, release.name, viewAll, t],
   )
 
   const innerContent = useMemo<React.ReactNode>(() => {
