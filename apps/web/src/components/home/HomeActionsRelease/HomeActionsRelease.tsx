@@ -17,6 +17,7 @@ import clsx from 'clsx'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   Component,
+  type ComponentType,
   FC,
   ReactNode,
   forwardRef,
@@ -264,7 +265,9 @@ const CompatibilityConfirmModal: FC<{
                 )}
                 onClick={() => onSelectReason('detectWrong')}
               >
-                <div className="text-sm font-medium">{detectWrongActionText}</div>
+                <div className="text-sm font-medium">
+                  {detectWrongActionText}
+                </div>
                 <div className="mt-1 text-xs dark:text-zinc-300 text-stone-600">
                   {detectWrongDescription}
                 </div>
@@ -279,7 +282,9 @@ const CompatibilityConfirmModal: FC<{
                 )}
                 onClick={() => onSelectReason('otherDevice')}
               >
-                <div className="text-sm font-medium">{otherDeviceActionText}</div>
+                <div className="text-sm font-medium">
+                  {otherDeviceActionText}
+                </div>
                 <div className="mt-1 text-xs dark:text-zinc-300 text-stone-600">
                   {otherDeviceDescription}
                 </div>
@@ -549,32 +554,26 @@ const DownloadButton: FC<{
     }
 
     void detectDownload()
+  }, [detectDownload, requiresCompatibilityConfirm])
+
+  const handleCompatibilityConfirm = useCallback(() => {
+    if (!finalConfirmReason) {
+      return
+    }
+    console.warn('download started with incompatible architecture', {
+      reason: finalConfirmReason,
+      selectedPlatformLabel,
+      recommendedPlatformLabel,
+    })
+    setFinalConfirmReason(null)
+    setCompatibilityModalOpen(false)
+    void detectDownload()
   }, [
     detectDownload,
-    requiresCompatibilityConfirm,
+    finalConfirmReason,
+    recommendedPlatformLabel,
+    selectedPlatformLabel,
   ])
-
-  const handleCompatibilityConfirm = useCallback(
-    () => {
-      if (!finalConfirmReason) {
-        return
-      }
-      console.warn('download started with incompatible architecture', {
-        reason: finalConfirmReason,
-        selectedPlatformLabel,
-        recommendedPlatformLabel,
-      })
-      setFinalConfirmReason(null)
-      setCompatibilityModalOpen(false)
-      void detectDownload()
-    },
-    [
-      detectDownload,
-      finalConfirmReason,
-      recommendedPlatformLabel,
-      selectedPlatformLabel,
-    ],
-  )
 
   const handleSelectCompatibilityReason = useCallback(
     (reason: CompatibilityConfirmReason) => {
@@ -683,7 +682,9 @@ const DownloadButton: FC<{
               selected: selectedPlatformLabel,
             },
           )}
-          cancelText={t('release.platformDetect.archIncompatibleConfirm.actions.cancel')}
+          cancelText={t(
+            'release.platformDetect.archIncompatibleConfirm.actions.cancel',
+          )}
           onClose={handleCloseCompatibilityFlow}
           onSelectReason={handleSelectCompatibilityReason}
         />
@@ -705,8 +706,12 @@ const DownloadButton: FC<{
                   },
                 )
           }
-          confirmText={t('release.platformDetect.archIncompatibleConfirm.actions.confirm')}
-          cancelText={t('release.platformDetect.archIncompatibleConfirm.actions.cancel')}
+          confirmText={t(
+            'release.platformDetect.archIncompatibleConfirm.actions.confirm',
+          )}
+          cancelText={t(
+            'release.platformDetect.archIncompatibleConfirm.actions.cancel',
+          )}
           onClose={handleCloseCompatibilityFlow}
           onConfirm={handleCompatibilityConfirm}
         />
@@ -843,7 +848,8 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
   )
 
   const detectedPlatform = useMemo(
-    () => validPlatforms.find((platform) => platform.platform.id === envPlatformId),
+    () =>
+      validPlatforms.find((platform) => platform.platform.id === envPlatformId),
     [envPlatformId, validPlatforms],
   )
 
@@ -1055,7 +1061,9 @@ interface Props extends WithTranslation {
   children?: React.ReactNode
 }
 
-export const HomeActionsReleaseErrorBoundary = withTranslation()(
+export const HomeActionsReleaseErrorBoundary: ComponentType<
+  Pick<Props, 'children'>
+> = withTranslation()(
   class HomeActionsReleaseErrorBoundary extends Component<Props> {
     state = {
       error: null as Error | null,
