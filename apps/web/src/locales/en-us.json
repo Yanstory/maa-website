@@ -51,7 +51,7 @@
             "archIncompatible": "Incompatible with your system architecture",
             "archIncompatibleConfirm": {
                 "title": "Continue Download Confirmation (Incompatible Architecture)",
-                "warning": "Your detected system is recommended to download {{recommended}}, but you selected {{selected}}. The wrong architecture will not run. Continue?",
+                "warning": "Recommended download is {{recommended}}, but {{selected}} is currently selected. The application will not run if the architecture is incorrect. Continue?",
                 "final": {
                     "detectWrong": "Only click Continue Download if you are sure platform detection is wrong and {{selected}} is the correct package; otherwise click Cancel.",
                     "otherDevice": "If you are downloading {{selected}} for another device, click Continue Download; otherwise click Cancel."
