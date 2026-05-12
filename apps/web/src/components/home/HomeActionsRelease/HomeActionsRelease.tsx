@@ -379,6 +379,9 @@ const CompatibilityFinalConfirmModal: FC<{
             </div>
 
             <div className="mt-5 flex justify-end gap-2">
+              <GlowButton bordered onClick={onConfirm}>
+                <span className="px-2 py-0.5 text-sm">{confirmText}</span>
+              </GlowButton>
               <GlowButton
                 translucent
                 bordered
@@ -388,9 +391,6 @@ const CompatibilityFinalConfirmModal: FC<{
                 <span className="px-2 py-0.5 text-sm font-semibold">
                   {cancelText}
                 </span>
-              </GlowButton>
-              <GlowButton bordered onClick={onConfirm}>
-                <span className="px-2 py-0.5 text-sm">{confirmText}</span>
               </GlowButton>
             </div>
           </motion.div>
