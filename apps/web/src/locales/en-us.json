@@ -53,8 +53,8 @@
                 "title": "Continue Download Confirmation (Incompatible Architecture)",
                 "warning": "Recommended download is {{recommended}}, but {{selected}} is currently selected. The application will not run if the architecture is incorrect. Continue?",
                 "final": {
-                    "detectWrong": "Only click Continue Download if you are sure platform detection is wrong and {{selected}} is the correct package; otherwise click Cancel.",
-                    "otherDevice": "If you are downloading {{selected}} for another device, click Continue Download; otherwise click Cancel."
+                    "detectWrong": "Only click Continue Download if you are sure platform detection is wrong and {{selected}} is the correct package; <1>otherwise click Cancel.</1>",
+                    "otherDevice": "If you are downloading {{selected}} for another device, click Continue Download; <1>otherwise click Cancel.</1>"
                 },
                 "actions": {
                     "detectWrong": "Detection is wrong, continue download",

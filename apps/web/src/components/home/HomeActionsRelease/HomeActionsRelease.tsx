@@ -202,9 +202,9 @@ const CompatibilityConfirmModal: FC<{
   title: string
   warning: string
   detectWrongActionText: string
-  detectWrongDescription: string
+  detectWrongDescription: ReactNode
   otherDeviceActionText: string
-  otherDeviceDescription: string
+  otherDeviceDescription: ReactNode
   cancelText: string
   onClose: () => void
   onSelectReason: (reason: CompatibilityConfirmReason) => void
@@ -300,8 +300,15 @@ const CompatibilityConfirmModal: FC<{
             </div>
 
             <div className="mt-4 flex justify-end">
-              <GlowButton translucent bordered onClick={onClose}>
-                <span className="px-2 py-0.5 text-sm">{cancelText}</span>
+              <GlowButton
+                translucent
+                bordered
+                onClick={onClose}
+                className="allin-download-button relative text-white isolate overflow-hidden *:relative *:z-10"
+              >
+                <span className="px-2 py-0.5 text-sm font-semibold">
+                  {cancelText}
+                </span>
               </GlowButton>
             </div>
           </motion.div>
@@ -314,7 +321,7 @@ const CompatibilityConfirmModal: FC<{
 const CompatibilityFinalConfirmModal: FC<{
   open: boolean
   title: string
-  message: string
+  message: ReactNode
   confirmText: string
   cancelText: string
   onClose: () => void
@@ -372,8 +379,15 @@ const CompatibilityFinalConfirmModal: FC<{
             </div>
 
             <div className="mt-5 flex justify-end gap-2">
-              <GlowButton translucent bordered onClick={onClose}>
-                <span className="px-2 py-0.5 text-sm">{cancelText}</span>
+              <GlowButton
+                translucent
+                bordered
+                onClick={onClose}
+                className="allin-download-button relative text-white isolate overflow-hidden *:relative *:z-10"
+              >
+                <span className="px-2 py-0.5 text-sm font-semibold">
+                  {cancelText}
+                </span>
               </GlowButton>
               <GlowButton bordered onClick={onConfirm}>
                 <span className="px-2 py-0.5 text-sm">{confirmText}</span>
@@ -645,7 +659,7 @@ const DownloadButton: FC<{
           onClick={handleDownloadClick}
           className={
             isCurrentPlatform
-              ? 'allin-download-button relative isolate overflow-hidden text-white dark:text-white *:relative *:z-10'
+              ? 'allin-download-button relative isolate overflow-hidden text-white *:relative *:z-10'
               : undefined
           }
         >
@@ -685,21 +699,31 @@ const DownloadButton: FC<{
           detectWrongActionText={t(
             'release.platformDetect.archIncompatibleConfirm.actions.detectWrong',
           )}
-          detectWrongDescription={t(
-            'release.platformDetect.archIncompatibleConfirm.final.detectWrong',
-            {
-              selected: selectedPlatformLabel,
-            },
-          )}
+          detectWrongDescription={
+            <Trans
+              i18nKey="release.platformDetect.archIncompatibleConfirm.final.detectWrong"
+              values={{
+                selected: selectedPlatformLabel,
+              }}
+              components={{
+                1: <strong className="font-semibold" />,
+              }}
+            />
+          }
           otherDeviceActionText={t(
             'release.platformDetect.archIncompatibleConfirm.actions.otherDevice',
           )}
-          otherDeviceDescription={t(
-            'release.platformDetect.archIncompatibleConfirm.final.otherDevice',
-            {
-              selected: selectedPlatformLabel,
-            },
-          )}
+          otherDeviceDescription={
+            <Trans
+              i18nKey="release.platformDetect.archIncompatibleConfirm.final.otherDevice"
+              values={{
+                selected: selectedPlatformLabel,
+              }}
+              components={{
+                1: <strong className="font-semibold" />,
+              }}
+            />
+          }
           cancelText={t(
             'release.platformDetect.archIncompatibleConfirm.actions.cancel',
           )}
@@ -710,19 +734,27 @@ const DownloadButton: FC<{
           open={compatibilityModalOpen && !!finalConfirmReason}
           title={t('release.platformDetect.archIncompatibleConfirm.title')}
           message={
-            finalConfirmReason === 'otherDevice'
-              ? t(
-                  'release.platformDetect.archIncompatibleConfirm.final.otherDevice',
-                  {
-                    selected: selectedPlatformLabel,
-                  },
-                )
-              : t(
-                  'release.platformDetect.archIncompatibleConfirm.final.detectWrong',
-                  {
-                    selected: selectedPlatformLabel,
-                  },
-                )
+            finalConfirmReason === 'otherDevice' ? (
+              <Trans
+                i18nKey="release.platformDetect.archIncompatibleConfirm.final.otherDevice"
+                values={{
+                  selected: selectedPlatformLabel,
+                }}
+                components={{
+                  1: <strong className="font-semibold" />,
+                }}
+              />
+            ) : (
+              <Trans
+                i18nKey="release.platformDetect.archIncompatibleConfirm.final.detectWrong"
+                values={{
+                  selected: selectedPlatformLabel,
+                }}
+                components={{
+                  1: <strong className="font-semibold" />,
+                }}
+              />
+            )
           }
           confirmText={t(
             'release.platformDetect.archIncompatibleConfirm.actions.confirm',
