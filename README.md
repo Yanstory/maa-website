@@ -27,7 +27,11 @@ Choose *ONE* of the following methods to set up your environment:
 Please [Install Node.js](https://nodejs.org/en/download) first, then install dependencies using `pnpm` in the *ROOT* directory:
 
 ```shell
+# If corepack is available (by default in Node.js 16.10+), you can use it to manage pnpm.
+corepack enable
+# __OR__ if corepack is not available, you can manually install pnpm globally
 npm install -g pnpm
+# then install dependencies
 pnpm install --frozen-lockfile --recursive
 ```
 
