@@ -66,10 +66,14 @@ html:not(.dark) {
 }
 
 .dark .allin-download-button {
-  --allin-download-lightness: 66%;
-  --allin-download-alpha: 0.34;
-  --allin-download-filter: saturate(0.78) brightness(0.96);
-  --allin-download-filter-hover: saturate(0.86) brightness(1);
+  --allin-download-lightness: 68%;
+  --allin-download-alpha: 0.5;
+  --allin-download-filter-saturate: 1.02;
+  --allin-download-filter-contrast: 1.18;
+  --allin-download-filter-brightness: 1.04;
+  --allin-download-filter-hover-saturate: 1.08;
+  --allin-download-filter-hover-contrast: 1.22;
+  --allin-download-filter-hover-brightness: 1.08;
 }
 
 .allin-download-button {
@@ -81,11 +85,15 @@ html:not(.dark) {
   --allin-download-hue-step: calc(
     var(--allin-download-hue-span) / var(--allin-download-cycle-steps)
   );
-  --allin-download-saturation: 96%;
-  --allin-download-lightness: 70%;
-  --allin-download-alpha: 0.46;
-  --allin-download-filter: saturate(0.84) brightness(1.05);
-  --allin-download-filter-hover: saturate(0.94) brightness(1.08);
+  --allin-download-saturation: 100%;
+  --allin-download-lightness: 66%;
+  --allin-download-alpha: 0.6;
+  --allin-download-filter-saturate: 1.08;
+  --allin-download-filter-contrast: 1.12;
+  --allin-download-filter-brightness: 1.02;
+  --allin-download-filter-hover-saturate: 1.14;
+  --allin-download-filter-hover-contrast: 1.16;
+  --allin-download-filter-hover-brightness: 1.04;
   --allin-download-duration: 6s;
 
   --allin-download-hue-end: calc(
@@ -132,14 +140,18 @@ html:not(.dark) {
       )
       var(--allin-download-cycle)
   );
-  filter: var(--allin-download-filter);
+  filter: saturate(var(--allin-download-filter-saturate))
+    contrast(var(--allin-download-filter-contrast))
+    brightness(var(--allin-download-filter-brightness));
   transition: filter 200ms ease;
   animation: allin-download-button-gradient var(--allin-download-duration)
     linear infinite;
 }
 
 .allin-download-button:hover::before {
-  filter: var(--allin-download-filter-hover);
+  filter: saturate(var(--allin-download-filter-hover-saturate))
+    contrast(var(--allin-download-filter-hover-contrast))
+    brightness(var(--allin-download-filter-hover-brightness));
 }
 
 @media (prefers-reduced-motion: reduce) {
