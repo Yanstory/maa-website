@@ -102,52 +102,60 @@ interface DownloadStateProps {
   iconClassName?: string
   title: ReactNode
   className?: string
+  isCurrentPlatform?: boolean
 }
 
 export const DownloadState: FC<DownloadStateProps> = forwardRef<
   HTMLDivElement,
   DownloadStateProps
->(({ icon, iconClassName, title, className }, ref) => {
-  return (
-    <motion.div
-      className={clsx(
-        'flex py-6 px-3 flex-col items-center justify-center font-normal transition-colors duration-300',
-        'dark:text-white',
-        'text-stone-800',
-        className,
-      )}
-      {...{
-        exit: {
-          scale: 0.9,
-          opacity: 0,
-        },
-        initial: {
-          scale: 0,
-          opacity: 0,
-        },
-        animate: {
-          scale: 1,
-          opacity: 1,
-        },
-        transition: {
-          type: 'spring',
-          stiffness: 500,
-          damping: 30,
-        },
-      }}
-      ref={ref}
-    >
-      <div className="flex items-center -ml-1">
-        <Icon
-          className={clsx(iconClassName, 'transition-colors duration-300')}
-          icon={icon}
-          fontSize="28px"
-        />
-        <span className="ml-2 transition-colors duration-300">{title}</span>
-      </div>
-    </motion.div>
-  )
-})
+>(
+  (
+    { icon, iconClassName, title, className, isCurrentPlatform = false },
+    ref,
+  ) => {
+    return (
+      <motion.div
+        className={clsx(
+          'flex py-6 px-3 flex-col items-center justify-center font-normal transition-colors duration-300',
+          'dark:text-white',
+          'text-stone-800',
+          className,
+          isCurrentPlatform &&
+            'allin-download-button rounded-lg relative isolate overflow-hidden *:relative *:z-10 text-white',
+        )}
+        {...{
+          exit: {
+            scale: 0.9,
+            opacity: 0,
+          },
+          initial: {
+            scale: 0,
+            opacity: 0,
+          },
+          animate: {
+            scale: 1,
+            opacity: 1,
+          },
+          transition: {
+            type: 'spring',
+            stiffness: 500,
+            damping: 30,
+          },
+        }}
+        ref={ref}
+      >
+        <div className="flex items-center -ml-1">
+          <Icon
+            className={clsx(iconClassName, 'transition-colors duration-300')}
+            icon={icon}
+            fontSize="28px"
+          />
+          <span className="ml-2 transition-colors duration-300">{title}</span>
+        </div>
+      </motion.div>
+    )
+  },
+)
 DownloadState.displayName = 'DownloadState'
 
 type DownloadDetectionStates =
@@ -383,11 +391,13 @@ const DownloadButton: FC<{
   releaseName: string | null
   requiresCompatibilityConfirm?: boolean
   detectedPlatformLabel?: string | null
+  isCurrentPlatform?: boolean
 }> = ({
   platform,
   releaseName,
   requiresCompatibilityConfirm = false,
   detectedPlatformLabel,
+  isCurrentPlatform = false,
 }) => {
   const { t } = useTranslation()
   const href = platform.asset.browser_download_url
@@ -633,7 +643,11 @@ const DownloadButton: FC<{
         <GlowButton
           bordered
           onClick={handleDownloadClick}
-          className="allin-download-button relative isolate overflow-hidden text-white dark:text-white *:relative *:z-10"
+          className={
+            isCurrentPlatform
+              ? 'allin-download-button relative isolate overflow-hidden text-white dark:text-white *:relative *:z-10'
+              : undefined
+          }
         >
           <div className="flex flex-col items-start whitespace-nowrap">
             <div className="flex items-center -ml-1">
@@ -730,6 +744,7 @@ const DownloadButton: FC<{
           current: loadState.detected,
           total: mirrorsTemplate.length,
         })}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else if (loadState.state === 'speedTesting') {
@@ -738,6 +753,7 @@ const DownloadButton: FC<{
         iconClassName="animate-spin"
         icon={mdiLoading}
         title={t('release.speedTest.testing', { index: loadState.mirrorIndex })}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else if (loadState.state === 'detected') {
@@ -755,6 +771,7 @@ const DownloadButton: FC<{
         iconClassName="animate-spin"
         icon={mdiLoading}
         title={title}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else if (loadState.state === 'connecting') {
@@ -775,6 +792,7 @@ const DownloadButton: FC<{
         iconClassName="animate-spin"
         icon={mdiLoading}
         title={title}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else if (loadState.state === 'downloading') {
@@ -796,6 +814,7 @@ const DownloadButton: FC<{
           </div>
         }
         className="tabular-nums"
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else if (loadState.state === 'downloaded') {
@@ -803,6 +822,7 @@ const DownloadButton: FC<{
       <DownloadState
         icon={mdiCheck}
         title={t(platform.platform.messages.downloaded)}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else if (loadState.state === 'fallback') {
@@ -811,6 +831,7 @@ const DownloadButton: FC<{
         iconClassName="animate-spin"
         icon={mdiLoading}
         title={t('release.download.downloadingFallback')}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   } else {
@@ -818,6 +839,7 @@ const DownloadButton: FC<{
       <DownloadState
         icon={mdiAlertCircle}
         title={t('release.download.invalidState')}
+        isCurrentPlatform={isCurrentPlatform}
       />
     )
   }
@@ -886,6 +908,7 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
               releaseName={release.name}
               requiresCompatibilityConfirm={shouldConfirmIncompatibleDownload}
               detectedPlatformLabel={detectedPlatformLabel}
+              isCurrentPlatform={isCurrentPlatform}
             />
             <div className="min-h-5 mt-1 text-xs">
               {!isCurrentPlatform ? (
