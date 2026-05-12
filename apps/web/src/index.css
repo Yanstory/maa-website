@@ -65,10 +65,39 @@ html:not(.dark) {
   }
 }
 
+.dark .allin-download-button {
+  --allin-download-lightness: 66%;
+  --allin-download-alpha: 0.34;
+  --allin-download-filter: saturate(0.78) brightness(0.96);
+  --allin-download-filter-hover: saturate(0.86) brightness(1);
+}
+
 .allin-download-button {
-  --allin-download-cycle: 24rem;
-  --allin-download-loop-distance: calc(24rem / cos(30deg));
+  --allin-download-cycle-period: 1.5rem;
+  --allin-download-cycle-steps: 16;
+  --allin-download-angle: 30deg;
+  --allin-download-hue-start: 8;
+  --allin-download-hue-span: 360;
+  --allin-download-hue-step: calc(
+    var(--allin-download-hue-span) / var(--allin-download-cycle-steps)
+  );
+  --allin-download-saturation: 96%;
+  --allin-download-lightness: 70%;
+  --allin-download-alpha: 0.46;
+  --allin-download-filter: saturate(0.84) brightness(1.05);
+  --allin-download-filter-hover: saturate(0.94) brightness(1.08);
   --allin-download-duration: 6s;
+
+  --allin-download-hue-end: calc(
+    var(--allin-download-hue-start) + var(--allin-download-hue-step) *
+      var(--allin-download-cycle-steps)
+  );
+  --allin-download-cycle: calc(
+    var(--allin-download-cycle-period) * var(--allin-download-cycle-steps)
+  );
+  --allin-download-loop-distance: calc(
+    var(--allin-download-cycle) / cos(var(--allin-download-angle))
+  );
   text-shadow:
     1px 1px 1px rgb(0 0 0 / 0.72),
     -1px 1px 1px rgb(0 0 0 / 0.72),
@@ -91,61 +120,26 @@ html:not(.dark) {
   transform-origin: left center;
   will-change: transform;
   background-image: repeating-linear-gradient(
-    120deg,
-    hsl(8 96% 70% / 0.46) 0,
-    hsl(30 96% 70% / 0.46) 1.5rem,
-    hsl(52 96% 70% / 0.46) 3rem,
-    hsl(74 96% 70% / 0.46) 4.5rem,
-    hsl(96 96% 70% / 0.46) 6rem,
-    hsl(118 96% 70% / 0.46) 7.5rem,
-    hsl(140 96% 70% / 0.46) 9rem,
-    hsl(162 96% 70% / 0.46) 10.5rem,
-    hsl(184 96% 70% / 0.46) 12rem,
-    hsl(206 96% 70% / 0.46) 13.5rem,
-    hsl(228 96% 70% / 0.46) 15rem,
-    hsl(250 96% 70% / 0.46) 16.5rem,
-    hsl(272 96% 70% / 0.46) 18rem,
-    hsl(294 96% 70% / 0.46) 19.5rem,
-    hsl(316 96% 70% / 0.46) 21rem,
-    hsl(338 96% 70% / 0.46) 22.5rem,
-    hsl(368 96% 70% / 0.46) 24rem
+    calc(90deg + var(--allin-download-angle)) in hsl longer hue,
+    hsl(
+        var(--allin-download-hue-start) var(--allin-download-saturation)
+          var(--allin-download-lightness) / var(--allin-download-alpha)
+      )
+      0,
+    hsl(
+        var(--allin-download-hue-end) var(--allin-download-saturation)
+          var(--allin-download-lightness) / var(--allin-download-alpha)
+      )
+      var(--allin-download-cycle)
   );
-  filter: saturate(0.84) brightness(1.05);
+  filter: var(--allin-download-filter);
   transition: filter 200ms ease;
   animation: allin-download-button-gradient var(--allin-download-duration)
     linear infinite;
 }
 
 .allin-download-button:hover::before {
-  filter: saturate(0.94) brightness(1.08);
-}
-
-.dark .allin-download-button::before {
-  background-image: repeating-linear-gradient(
-    120deg,
-    hsl(8 96% 66% / 0.34) 0,
-    hsl(30 96% 66% / 0.34) 1.5rem,
-    hsl(52 96% 66% / 0.34) 3rem,
-    hsl(74 96% 66% / 0.34) 4.5rem,
-    hsl(96 96% 66% / 0.34) 6rem,
-    hsl(118 96% 66% / 0.34) 7.5rem,
-    hsl(140 96% 66% / 0.34) 9rem,
-    hsl(162 96% 66% / 0.34) 10.5rem,
-    hsl(184 96% 66% / 0.34) 12rem,
-    hsl(206 96% 66% / 0.34) 13.5rem,
-    hsl(228 96% 66% / 0.34) 15rem,
-    hsl(250 96% 66% / 0.34) 16.5rem,
-    hsl(272 96% 66% / 0.34) 18rem,
-    hsl(294 96% 66% / 0.34) 19.5rem,
-    hsl(316 96% 66% / 0.34) 21rem,
-    hsl(338 96% 66% / 0.34) 22.5rem,
-    hsl(368 96% 66% / 0.34) 24rem
-  );
-  filter: saturate(0.78) brightness(0.96);
-}
-
-.dark .allin-download-button:hover::before {
-  filter: saturate(0.86) brightness(1);
+  filter: var(--allin-download-filter-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {
