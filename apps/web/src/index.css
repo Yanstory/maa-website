@@ -50,3 +50,107 @@ html:not(.dark) {
 .font-logo {
   font-family: 'Saira Condensed', sans-serif;
 }
+
+@keyframes allin-download-button-gradient {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(
+      calc(var(--allin-download-loop-distance) * -1),
+      0,
+      0
+    );
+  }
+}
+
+.allin-download-button {
+  --allin-download-cycle: 24rem;
+  --allin-download-loop-distance: calc(24rem / cos(30deg));
+  --allin-download-duration: 6s;
+  text-shadow:
+    1px 1px 1px rgb(0 0 0 / 0.72),
+    -1px 1px 1px rgb(0 0 0 / 0.72),
+    -1px -1px 1px rgb(0 0 0 / 0.72),
+    1px -1px 1px rgb(0 0 0 / 0.72);
+}
+
+.allin-download-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: calc(var(--allin-download-loop-distance) * -1);
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transform-origin: left center;
+  will-change: transform;
+  background-image: repeating-linear-gradient(
+    120deg,
+    hsl(8 96% 70% / 0.46) 0,
+    hsl(30 96% 70% / 0.46) 1.5rem,
+    hsl(52 96% 70% / 0.46) 3rem,
+    hsl(74 96% 70% / 0.46) 4.5rem,
+    hsl(96 96% 70% / 0.46) 6rem,
+    hsl(118 96% 70% / 0.46) 7.5rem,
+    hsl(140 96% 70% / 0.46) 9rem,
+    hsl(162 96% 70% / 0.46) 10.5rem,
+    hsl(184 96% 70% / 0.46) 12rem,
+    hsl(206 96% 70% / 0.46) 13.5rem,
+    hsl(228 96% 70% / 0.46) 15rem,
+    hsl(250 96% 70% / 0.46) 16.5rem,
+    hsl(272 96% 70% / 0.46) 18rem,
+    hsl(294 96% 70% / 0.46) 19.5rem,
+    hsl(316 96% 70% / 0.46) 21rem,
+    hsl(338 96% 70% / 0.46) 22.5rem,
+    hsl(368 96% 70% / 0.46) 24rem
+  );
+  filter: saturate(0.84) brightness(1.05);
+  transition: filter 200ms ease;
+  animation: allin-download-button-gradient var(--allin-download-duration)
+    linear infinite;
+}
+
+.allin-download-button:hover::before {
+  filter: saturate(0.94) brightness(1.08);
+}
+
+.dark .allin-download-button::before {
+  background-image: repeating-linear-gradient(
+    120deg,
+    hsl(8 96% 66% / 0.34) 0,
+    hsl(30 96% 66% / 0.34) 1.5rem,
+    hsl(52 96% 66% / 0.34) 3rem,
+    hsl(74 96% 66% / 0.34) 4.5rem,
+    hsl(96 96% 66% / 0.34) 6rem,
+    hsl(118 96% 66% / 0.34) 7.5rem,
+    hsl(140 96% 66% / 0.34) 9rem,
+    hsl(162 96% 66% / 0.34) 10.5rem,
+    hsl(184 96% 66% / 0.34) 12rem,
+    hsl(206 96% 66% / 0.34) 13.5rem,
+    hsl(228 96% 66% / 0.34) 15rem,
+    hsl(250 96% 66% / 0.34) 16.5rem,
+    hsl(272 96% 66% / 0.34) 18rem,
+    hsl(294 96% 66% / 0.34) 19.5rem,
+    hsl(316 96% 66% / 0.34) 21rem,
+    hsl(338 96% 66% / 0.34) 22.5rem,
+    hsl(368 96% 66% / 0.34) 24rem
+  );
+  filter: saturate(0.78) brightness(0.96);
+}
+
+.dark .allin-download-button:hover::before {
+  filter: saturate(0.86) brightness(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .allin-download-button::before {
+    animation: none;
+    transform: translate3d(-12%, 0, 0);
+  }
+}

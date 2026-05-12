@@ -324,7 +324,7 @@ const CompatibilityFinalConfirmModal: FC<{
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center px-4"
+          className="fixed inset-0 z-60 flex items-center justify-center px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -630,7 +630,11 @@ const DownloadButton: FC<{
   if (loadState.state === 'idle') {
     return (
       <>
-        <GlowButton bordered onClick={handleDownloadClick}>
+        <GlowButton
+          bordered
+          onClick={handleDownloadClick}
+          className="allin-download-button relative isolate overflow-hidden text-white dark:text-white *:relative *:z-10"
+        >
           <div className="flex flex-col items-start whitespace-nowrap">
             <div className="flex items-center -ml-1">
               <Icon icon={platform.platform.icon} fontSize="28px" />
