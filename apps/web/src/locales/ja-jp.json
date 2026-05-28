@@ -39,8 +39,10 @@
     "release": {
         "buttonLabels": {
             "download": "ダウンロード",
-            "viewAll": "すべて表示",
+            "viewAll": "他のプラットフォーム",
             "collapse": "折りたたむ",
+            "viewAllPlatforms": "他のプラットフォーム",
+            "viewAllWarning": "自分が何をしているか理解していない限り、他のプラットフォームを展開しないでください。",
             "mirrorchyanCDKPrompt": "Mirrorちゃん CDK をお持ちですか？",
             "mirrorchyanDownload": "Mirrorちゃん 高速ダウンロードへ",
             "versionInfoLoadingError": "<1>バージョン情報の読み込みに失敗しました。<br />GitHub Releases からダウンロードを試みてください。</1><2>Github Release へダウンロードする</2>"

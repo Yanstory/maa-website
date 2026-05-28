@@ -400,6 +400,87 @@ const CompatibilityFinalConfirmModal: FC<{
   )
 }
 
+const AllPlatformsModal: FC<{
+  open: boolean
+  title: string
+  warning: string
+  platforms: ResolvedPlatform[]
+  currentPlatformId: string | null | typeof DetectionFailedSymbol
+  onClose: () => void
+  onConfirm: () => void
+}> = ({ open, title, warning, platforms, currentPlatformId, onClose, onConfirm }) => {
+  const { t } = useTranslation()
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.button
+            type="button"
+            aria-label="Close"
+            className="absolute inset-0 bg-black/45"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className={clsx(
+              'relative w-full max-w-2xl rounded-2xl border p-5 shadow-2xl',
+              'dark:bg-zinc-900/95 dark:border-zinc-700 dark:text-zinc-100',
+              'bg-white/95 border-stone-200 text-stone-900',
+            )}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold dark:text-zinc-50 text-stone-900">
+                {title}
+              </h3>
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-1 rounded-lg hover:bg-stone-200/60 dark:hover:bg-zinc-700/60 transition-colors"
+              >
+                <Icon icon={mdiAlertCircle} width="18" height="18" className="opacity-50" />
+              </button>
+            </div>
+
+            <div className="flex items-start gap-3 mb-4">
+              <Icon
+                icon={mdiAlertCircle}
+                className="mt-0.5 shrink-0 text-orange-500"
+                width="20"
+                height="20"
+              />
+              <p className="text-sm leading-6 dark:text-zinc-200 text-stone-700">
+                {warning}
+              </p>
+            </div>
+
+            <div className="mt-4 flex justify-end gap-2">
+              <GlowButton translucent bordered onClick={onClose}>
+                <span className="px-3 py-1 text-sm">
+                  {t('release.platformDetect.archIncompatibleConfirm.actions.cancel')}
+                </span>
+              </GlowButton>
+              <GlowButton bordered onClick={onConfirm}>
+                <span className="px-3 py-1 text-sm">
+                  {t('release.platformDetect.archIncompatibleConfirm.actions.confirm')}
+                </span>
+              </GlowButton>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 const DownloadButton: FC<{
   platform: ResolvedPlatform
   releaseName: string | null
@@ -882,6 +963,7 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
   const { isWidthOverflow } = useLayoutState()
 
   const [viewAll, setViewAll] = useState(false)
+  const [allPlatformsModalOpen, setAllPlatformsModalOpen] = useState(false)
   const [envPlatformId, setCurrentPlatformId] = useState<
     string | typeof DetectionFailedSymbol | null
   >(null)
@@ -1061,13 +1143,31 @@ export const DownloadButtons: FC<{ release: Release }> = ({ release }) => {
             exit={{ opacity: 0, scale: 0.8 }}
             className={`flex items-center gap-4 ${isWidthOverflow ? 'flex-col w-full' : ''}`}
           >
-            <GlowButton bordered onClick={() => setViewAll((prev) => !prev)}>
+            <GlowButton bordered onClick={() => {
+              if (viewAll) {
+                setViewAll(false)
+              } else {
+                setAllPlatformsModalOpen(true)
+              }
+            }}>
               <div className="text-base">
                 {viewAll
                   ? t('release.buttonLabels.collapse')
                   : t('release.buttonLabels.viewAll')}
               </div>
             </GlowButton>
+            <AllPlatformsModal
+              open={allPlatformsModalOpen}
+              title={t('release.buttonLabels.viewAllPlatforms')}
+              warning={t('release.buttonLabels.viewAllWarning')}
+              platforms={validPlatforms}
+              currentPlatformId={envPlatformId}
+              onClose={() => setAllPlatformsModalOpen(false)}
+              onConfirm={() => {
+                setAllPlatformsModalOpen(false)
+                setViewAll(true)
+              }}
+            />
           </motion.div>
 
           {mirrorchyanAvailable && (

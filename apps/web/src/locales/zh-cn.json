@@ -39,8 +39,10 @@
     "release": {
         "buttonLabels": {
             "download": "下载",
-            "viewAll": "查看全部",
+            "viewAll": "其他平台",
             "collapse": "收起",
+            "viewAllPlatforms": "其他平台",
+            "viewAllWarning": "除非你知道自己在做什么，否则不要展开其他平台。",
             "mirrorchyanCDKPrompt": "已有 Mirror酱 CDK？",
             "mirrorchyanDownload": "前往 Mirror酱 高速下载",
             "versionInfoLoadingError": "<1>载入版本信息失败。您可尝试</1><2>前往 GitHub Releases 下载</2>"
