@@ -121,7 +121,7 @@ export const DownloadState: FC<DownloadStateProps> = forwardRef<
           'text-stone-800',
           className,
           isCurrentPlatform &&
-            'allin-download-button rounded-lg relative isolate overflow-hidden *:relative *:z-10 text-white',
+            'allin-download-button rounded-lg relative isolate overflow-hidden *:relative *:z-10 dark:text-white text-stone-800',
         )}
         {...{
           exit: {
@@ -304,7 +304,7 @@ const CompatibilityConfirmModal: FC<{
                 translucent
                 bordered
                 onClick={onClose}
-                className="allin-download-button relative text-white isolate overflow-hidden *:relative *:z-10"
+                className="allin-download-button relative dark:text-white text-stone-800 isolate overflow-hidden *:relative *:z-10"
               >
                 <span className="px-2 py-0.5 text-sm font-semibold">
                   {cancelText}
@@ -659,7 +659,7 @@ const DownloadButton: FC<{
           onClick={handleDownloadClick}
           className={
             isCurrentPlatform
-              ? 'allin-download-button relative isolate overflow-hidden text-white *:relative *:z-10'
+              ? 'allin-download-button relative isolate overflow-hidden dark:text-white text-stone-800 *:relative *:z-10'
               : undefined
           }
         >
